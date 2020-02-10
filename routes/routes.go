@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/KyTama/KyGo/main"
+	"github.com/KyTama/KyGo/app"
 	"net/http"
 	"time"
 
@@ -24,12 +24,12 @@ func NewRoutes() http.Handler {
 	r.Use(middleware.Throttle(100))
 	r.Use(middleware.Logger)
 	registerRoutes(r)
-	return http.TimeoutHandler(r, 30 * time.Second, `{"Message": "Service Unavailable"}`)
+	return http.TimeoutHandler(r, 30*time.Second, `{"Message": "Service Unavailable"}`)
 }
 
 func registerRoutes(r *chi.Mux) *chi.Mux {
 	r.Group(func(r chi.Router) {
-		r.Get("/ping", main.Ping)
+		r.Get("/ping", app.Main)
 	})
 
 	return r
